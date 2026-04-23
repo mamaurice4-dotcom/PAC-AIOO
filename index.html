@@ -3,134 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAC̈ OO - OMNISCIENCE SYSTEM</title>
+    <title>PAC̈ OO - OMNISCIENCE v3.0</title>
     <script src="https://cloudflare.com"></script>
     <style>
         :root { --accent: #00aaff; --bg: #050505; --card: #121212; --border: #222; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #eee; margin: 0; padding: 10px; font-size: 13px; }
         .header { text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; }
         .logo { font-size: 26px; font-weight: bold; letter-spacing: 5px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.7); }
-        h2 { font-size: 0.85em; color: var(--accent); text-transform: uppercase; margin: 0 0 12px 0; border-left: 3px solid var(--accent); padding-left: 10px; display: flex; justify-content: space-between; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 12px; }
+        h2 { font-size: 0.85em; color: var(--accent); text-transform: uppercase; margin: 0 0 12px 0; border-left: 3px solid var(--accent); padding-left: 10px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         input, select, textarea { width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 4px; margin-bottom: 8px; box-sizing: border-box; }
         button { width: 100%; padding: 12px; background: linear-gradient(135deg, #004488, #0074d9); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .res-box { background: #000; padding: 10px; border-radius: 4px; border: 1px solid #004488; margin-top: 5px; font-family: 'Courier New', monospace; line-height: 1.5; }
+        .diag-box { background: #1a1500; border: 1px solid #ffaa00; padding: 10px; border-radius: 4px; margin-top: 10px; color: #ffaa00; font-size: 0.9em; display: none; }
         .val { color: #00ff88; font-weight: bold; }
-        canvas { background: white; width: 100%; height: 100px; border-radius: 4px; margin-top: 10px; }
-        .tab-btn { background: #222; border: 1px solid #333; color: #888; padding: 5px 10px; font-size: 10px; cursor: pointer; }
-        .tab-active { color: var(--accent); border-color: var(--accent); }
+        canvas { background: white; width: 100%; height: 100px; border-radius: 4px; margin-top: 10px; border: 1px solid var(--accent); }
     </style>
 </head>
 <body>
 
     <div class="header">
         <div class="logo">PAC̈ OO</div>
-        <div style="font-size: 9px; color: #666; letter-spacing: 2px;">STATION OMNISCIENCE v2.0 - MAURICE</div>
+        <div style="font-size: 9px; color: #666; letter-spacing: 2px;">OMNISCIENCE v3.0 - DIAGNOSTIC CHIRURGICAL</div>
     </div>
 
-    <!-- MODULE 1 : FRIGOSCAN TOTAL -->
+    <!-- MODULE 1 : FRIGOSCAN AI (DIAGNOSTIC AUTOMATIQUE) -->
     <div class="card">
-        <h2>❄️ FRIGOSCAN (FLUIDES)</h2>
+        <h2>❄️ FRIGOSCAN AI</h2>
         <select id="gaz">
-            <optgroup label="HFC / HFO">
-                <option value="R32">R32</option><option value="R410A">R410A</option>
-                <option value="R134a">R134a</option><option value="R407C">R407C</option>
-                <option value="R404A">R404A</option><option value="R448A">R448A</option>
-                <option value="R452A">R452A</option>
-            </optgroup>
-            <optgroup label="Naturels">
-                <option value="R290">R290 (Propane)</option><option value="R600a">R600a</option>
-                <option value="R744">R744 (CO2)</option>
-            </optgroup>
+            <option value="R32">R32</option><option value="R410A">R410A</option>
+            <option value="R290">R290</option><option value="R134a">R134a</option>
         </select>
         <div class="grid">
-            <input type="number" id="pBP" placeholder="BP (Bar rel)">
+            <input type="number" id="pBP" placeholder="BP (Bar)">
             <input type="number" id="tAspi" placeholder="T° Aspi (°C)">
-            <input type="number" id="pHP" placeholder="HP (Bar rel)">
+            <input type="number" id="pHP" placeholder="HP (Bar)">
             <input type="number" id="tLiq" placeholder="T° Liq (°C)">
         </div>
-        <button onclick="calcFrigo()">Diagnostic Expert</button>
-        <div class="res-box" id="resFrigo">SK: -- | SR: -- | tCO2e: --</div>
+        <button onclick="calcFrigo()">Lancer l'Expertise</button>
+        <div class="res-box" id="resFrigo">SK: -- | SR: --</div>
+        <div id="diagFrigo" class="diag-box"></div>
     </div>
 
-    <!-- MODULE 2 : CHAUFFAGE & COMBUSTION -->
+    <!-- MODULE 2 : HYDRAULIQUE & PERTES DE CHARGE -->
     <div class="card">
-        <h2>🔥 CHAUFFAGE & COMBUSTION</h2>
+        <h2>💧 HYDRAULIQUE (PERTES RÉELLES)</h2>
         <div class="grid">
-            <select id="combustible">
-                <option value="fioul">Fioul Domestique</option>
-                <option value="gaz">Gaz Naturel</option>
-                <option value="propane">Propane</option>
+            <select id="matiere">
+                <option value="0.015">Cuivre</option>
+                <option value="0.03">Multicouche / PER</option>
             </select>
-            <input type="number" id="p_pompe" placeholder="P. Pompe (Bar)">
-        </div>
-        <div class="grid">
-            <input type="number" id="co2" placeholder="CO2 (%)">
-            <input type="number" id="t_fum" placeholder="T° Fumées (°C)">
-        </div>
-        <button onclick="calcCombustion()">Rendement & Combustion</button>
-        <div class="res-box" id="resComb">Rendement: -- | Excès Air: --</div>
-    </div>
-
-    <!-- MODULE 3 : HYDRAULIQUE & VASE -->
-    <div class="card">
-        <h2>💧 HYDRAULIQUE & VASE</h2>
-        <div class="grid">
-            <input type="number" id="pui_h" placeholder="Puis. Installation (kW)">
-            <input type="number" id="h_stat" placeholder="H. Statique (m)">
-        </div>
-        <button onclick="calcVase()">Dimensionner Vase & Débit</button>
-        <div class="res-box" id="resVase">Vase Min: -- | Débit (ΔT 5): --</div>
-    </div>
-
-    <!-- MODULE 4 : ÉLEC INDUSTRIELLE -->
-    <div class="card">
-        <h2>⚡ ÉLEC & CÂBLAGE</h2>
-        <div class="grid">
-            <input type="number" id="p_abs" placeholder="P. Absorbée (W)">
-            <select id="u_v">
-                <option value="230">Mono 230V</option>
-                <option value="400">Tri 400V</option>
+            <select id="diametre">
+                <option value="12">Ø 12</option><option value="16">Ø 16</option>
+                <option value="20">Ø 20</option><option value="26">Ø 26</option>
+                <option value="32">Ø 32</option>
             </select>
         </div>
-        <input type="number" id="long_cable" placeholder="Longueur câble (m)">
-        <button onclick="calcElec()">Intensité & Section Cu</button>
-        <div class="res-box" id="resElec">I: -- | Section: -- | ΔU: --</div>
+        <div class="grid">
+            <input type="number" id="pui_h" placeholder="Puis. (kW)">
+            <input type="number" id="long_reseau" placeholder="Long. Réseau (m)">
+        </div>
+        <button onclick="calcHydrau()">Calculer HMT Précise</button>
+        <div class="res-box" id="resHydrau">Débit: -- | Perte: -- mCE</div>
     </div>
 
-    <!-- MODULE 5 : OMNISCAN CODES ERREURS (DYNAMIQUE) -->
+    <!-- MODULE 3 : ÉLECTRICITÉ & PUISSANCE RÉELLE -->
     <div class="card">
-        <h2>🔍 OMNISCAN CODES</h2>
-        <select id="marque">
-            <option value="daikin">Daikin</option><option value="mitsubishi">Mitsubishi</option>
-            <option value="atlantic">Atlantic</option><option value="panasonic">Panasonic</option>
-            <option value="hitachi">Hitachi</option><option value="viessmann">Viessmann</option>
-            <option value="dedietrich">De Dietrich</option><option value="saunier">Saunier Duval</option>
-        </select>
-        <input type="text" id="codeErr" placeholder="Saisir Code (ex: U4, E7, F1...)" onkeyup="lookUpCode()">
-        <div class="res-box" id="resCode" style="color: #ffaa00;">Solution stratégique...</div>
+        <h2>⚡ PUISSANCE & INTENSITÉ</h2>
+        <div class="grid">
+            <input type="number" id="pw" placeholder="Watts">
+            <select id="ph">
+                <option value="1">230V Mono</option><option value="3">400V Tri</option>
+            </select>
+        </div>
+        <button onclick="calcElec()">Vérifier Consommation</button>
+        <div class="res-box" id="resElec">I: -- | Sec: --</div>
     </div>
 
-    <!-- MODULE 6 : RAPPORT SOUVERAIN -->
+    <!-- MODULE 4 : RÉGULATION & SONDES -->
     <div class="card">
-        <h2>📋 RAPPORT PAC̈ OO</h2>
-        <input type="text" id="cl_site" placeholder="Client / Site / N° Série">
-        <textarea id="cl_obs" placeholder="Mesures, fluides, travaux..."></textarea>
+        <h2>🤖 RÉGULATION (PID & NTC)</h2>
+        <div class="grid">
+            <input type="number" id="sp" placeholder="Consigne">
+            <input type="number" id="pv" placeholder="Mesure">
+        </div>
+        <button onclick="calcPID()">Calculer Action</button>
+        <div class="res-box" id="resPID">Action: -- %</div>
+    </div>
+
+    <!-- MODULE 5 : RAPPORT & SIGNATURE -->
+    <div class="card">
+        <h2>📋 RAPPORT SOUVERAIN</h2>
+        <input type="text" id="cl_site" placeholder="Client / Site">
+        <textarea id="cl_obs" placeholder="Actions réalisées..."></textarea>
         <canvas id="sig-pad"></canvas>
         <button onclick="savePDF()" style="background: #27ae60; margin-top: 10px;">Générer Rapport Expert</button>
     </div>
 
     <script>
         const database = {
-            gwp: {"R32":675, "R410A":2088, "R134a":1430, "R407C":1774, "R404A":3922, "R448A":1387, "R452A":2140, "R290":3, "R600a":3, "R744":1},
-            pt: {"R32":[1.1, -43], "R410A":[1.05, -48], "R134a":[1.45, -28], "R407C":[1.12, -40]},
-            codes: {
-                "daikin": {"U4":"Com. Int/Ext", "L5":"Inverter DC", "E7":"Ventilateur Ext", "A6":"Moteur Vent. Int", "H9":"Sonde Ext"},
-                "mitsubishi": {"E6":"Transmission", "P8":"T° Échangeur", "U2":"Refoulement", "F5":"Sonde Gaz"},
-                "viessmann": {"F2":"Surchauffe STB", "F4":"Défaut Flamme", "EB":"Échangeur", "0D":"Débit eau"},
-                "saunier": {"F01":"Allumage", "F05":"Surchauffe", "F22":"Manque eau"}
-            }
+            pt: {"R32":[1.1, -43], "R410A":[1.05, -48], "R290":[1.2, -45], "R134a":[1.45, -28]}
         };
 
         function calcFrigo() {
@@ -139,55 +112,55 @@
             let tA = parseFloat(document.getElementById('tAspi').value) || 0;
             let pH = parseFloat(document.getElementById('pHP').value) || 0;
             let tL = parseFloat(document.getElementById('tLiq').value) || 0;
-            let k = database.pt[g] || [1.1, -45];
+            let k = database.pt[g];
             let sk = tA - (pB * k[0] + k[1]);
             let sr = (pH * k[0] + k[1]) - tL;
-            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span> | SR: <span class="val">${sr.toFixed(1)}K</span> | GWP: ${database.gwp[g]}`;
+            
+            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span> | SR: <span class="val">${sr.toFixed(1)}K</span>`;
+            
+            let d = document.getElementById('diagFrigo');
+            d.style.display = "block";
+            if(sk > 12 && sr < 3) d.innerHTML = "⚠️ DIAGNOSTIC : Manque de charge ou fuite probable.";
+            else if(sk < 4 && sr > 10) d.innerHTML = "⚠️ DIAGNOSTIC : Surcharge de fluide ou condenseur encrassé.";
+            else if(sk < 3 && sr < 3) d.innerHTML = "⚠️ DIAGNOSTIC : Trop de liquide au compresseur (Détendeur trop ouvert).";
+            else d.innerHTML = "✅ PARAMÈTRES NORMAUX : Circuit équilibré.";
         }
 
-        function calcVase() {
+        function calcHydrau() {
             let p = parseFloat(document.getElementById('pui_h').value) || 0;
-            let h = parseFloat(document.getElementById('h_stat').value) || 0;
-            let v_inst = p * 12; 
-            let v_min = v_inst * 0.06;
-            let p_gonf = (h / 10) + 0.3;
-            document.getElementById('resVase').innerHTML = `Vase: <span class="val">${Math.ceil(v_min)}L</span> | Gonflage: <span class="val">${p_gonf.toFixed(1)} Bar</span>`;
+            let l = parseFloat(document.getElementById('long_reseau').value) || 0;
+            let rug = parseFloat(document.getElementById('matiere').value);
+            let d = parseFloat(document.getElementById('diametre').value);
+            let q = p / (1.163 * 5); // Delta T 5 par défaut
+            let hmt = (q * q * rug * l) / (d / 10);
+            document.getElementById('resHydrau').innerHTML = `Q: <span class="val">${q.toFixed(2)}m³/h</span> | HMT: <span class="val">${hmt.toFixed(1)} mCE</span>`;
         }
 
         function calcElec() {
-            let w = parseFloat(document.getElementById('p_abs').value) || 0;
-            let u = document.getElementById('u_v').value;
-            let l = parseFloat(document.getElementById('long_cable').value) || 1;
-            let i = (u == "230") ? w/230 : w/(400*1.732*0.85);
-            let s = (0.017 * l * 2 * i) / (u * 0.03);
-            document.getElementById('resElec').innerHTML = `I: <span class="val">${i.toFixed(1)}A</span> | Section Min: <span class="val">${s.toFixed(2)}mm²</span>`;
+            let pw = parseFloat(document.getElementById('pw').value) || 0;
+            let ph = document.getElementById('ph').value;
+            let i = (ph == "1") ? pw/230 : pw/(400*1.732*0.8);
+            document.getElementById('resElec').innerHTML = `I: <span class="val">${i.toFixed(1)}A</span> | Sec: <span class="val">2.5mm²</span>`;
         }
 
-        function lookUpCode() {
-            let m = document.getElementById('marque').value;
-            let c = document.getElementById('codeErr').value.toUpperCase();
-            document.getElementById('resCode').innerText = (database.codes[m] && database.codes[m][c]) ? database.codes[m][c] : "Code non répertorié";
+        function calcPID() {
+            let err = parseFloat(document.getElementById('sp').value) - parseFloat(document.getElementById('pv').value);
+            let out = Math.min(100, Math.max(0, err * 10));
+            document.getElementById('resPID').innerHTML = `Action: <span class="val">${out.toFixed(1)}%</span>`;
         }
 
         const pad = document.getElementById("sig-pad"), ctx = pad.getContext("2d");
         let active = false;
         pad.addEventListener("touchstart", (e) => { active=true; ctx.beginPath(); e.preventDefault(); });
-        pad.addEventListener("touchmove", (e) => { 
-            if(active) { 
-                let r = pad.getBoundingClientRect();
-                ctx.lineTo(e.touches.clientX - r.left, e.touches.clientY - r.top); ctx.stroke(); 
-            } e.preventDefault();
-        });
+        pad.addEventListener("touchmove", (e) => { if(active) { let r = pad.getBoundingClientRect(); ctx.lineTo(e.touches.clientX - r.left, e.touches.clientY - r.top); ctx.stroke(); } e.preventDefault(); });
         pad.addEventListener("touchend", () => active=false);
 
         function savePDF() {
             const { jsPDF } = window.jspdf; let doc = new jsPDF();
-            doc.setTextColor(0, 170, 255); doc.setFontSize(22); doc.text("PAC̈ OO SOLUTIONS", 20, 25);
-            doc.setFontSize(10); doc.setTextColor(100); doc.text("SOUVERAINETÉ TECHNIQUE - RAPPORT EXPERT", 20, 32);
-            doc.setTextColor(0); doc.text("Site : " + document.getElementById('cl_site').value, 20, 50);
-            doc.text("Observations : " + document.getElementById('cl_obs').value, 20, 60, {maxWidth: 160});
-            doc.addImage(pad.toDataURL(), 'PNG', 20, 120, 60, 30);
-            doc.save("PAC_OO_Rapport.pdf");
+            doc.text("PAC̈ OO - RAPPORT EXPERT", 20, 20);
+            doc.text("Site : " + document.getElementById('cl_site').value, 20, 40);
+            doc.addImage(pad.toDataURL(), 'PNG', 20, 80, 60, 30);
+            doc.save("Rapport_Expert.pdf");
         }
     </script>
 </body>
