@@ -3,162 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAC̈ OO - MASTERBOT FINAL</title>
+    <title>PAC̈ OO - OMNISCIENCE SYSTEM</title>
     <script src="https://cloudflare.com"></script>
     <style>
-        :root { --accent: #00aaff; --bg: #050505; --card: #111; --text: #e0e0e0; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; }
-        .header { text-align: center; padding: 20px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; }
-        .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 5px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-        .card { background: var(--card); border: 1px solid #222; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); }
-        h2 { font-size: 0.85em; color: var(--accent); text-transform: uppercase; margin: 0 0 12px 0; border-left: 3px solid var(--accent); padding-left: 10px; }
+        :root { --accent: #00aaff; --bg: #050505; --card: #121212; --border: #222; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #eee; margin: 0; padding: 10px; font-size: 13px; }
+        .header { text-align: center; padding: 15px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; }
+        .logo { font-size: 26px; font-weight: bold; letter-spacing: 5px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.7); }
+        h2 { font-size: 0.85em; color: var(--accent); text-transform: uppercase; margin: 0 0 12px 0; border-left: 3px solid var(--accent); padding-left: 10px; display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        input, select, textarea { width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 4px; margin-bottom: 8px; box-sizing: border-box; font-size: 14px; }
-        button { width: 100%; padding: 12px; background: linear-gradient(135deg, #004488, #0074d9); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; }
-        .res-box { background: #000; padding: 10px; border-radius: 4px; border: 1px solid #004488; margin-top: 5px; font-family: 'Courier New', monospace; font-size: 13px; }
+        input, select, textarea { width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 4px; margin-bottom: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: linear-gradient(135deg, #004488, #0074d9); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .res-box { background: #000; padding: 10px; border-radius: 4px; border: 1px solid #004488; margin-top: 5px; font-family: 'Courier New', monospace; line-height: 1.5; }
         .val { color: #00ff88; font-weight: bold; }
-        canvas { background: white; width: 100%; height: 120px; border-radius: 4px; margin-top: 10px; }
-        .footer { text-align: center; font-size: 0.7em; color: #444; margin-top: 20px; padding-bottom: 20px; }
+        canvas { background: white; width: 100%; height: 100px; border-radius: 4px; margin-top: 10px; }
+        .tab-btn { background: #222; border: 1px solid #333; color: #888; padding: 5px 10px; font-size: 10px; cursor: pointer; }
+        .tab-active { color: var(--accent); border-color: var(--accent); }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="logo-text">PAC̈ OO</div>
-        <div style="font-size: 9px; color: #666; letter-spacing: 2px;">OBJECTIF OMNISCIENCE - MASTERBOT V.FINAL</div>
+        <div class="logo">PAC̈ OO</div>
+        <div style="font-size: 9px; color: #666; letter-spacing: 2px;">STATION OMNISCIENCE v2.0 - MAURICE</div>
     </div>
 
-    <!-- MODULE 1 : FROID & VIDE -->
+    <!-- MODULE 1 : FRIGOSCAN TOTAL -->
     <div class="card">
-        <h2>❄️ FRIGOSCAN PRO</h2>
+        <h2>❄️ FRIGOSCAN (FLUIDES)</h2>
         <select id="gaz">
-            <option value="R32">R32</option>
-            <option value="R410A">R410A</option>
-            <option value="R134a">R134a</option>
+            <optgroup label="HFC / HFO">
+                <option value="R32">R32</option><option value="R410A">R410A</option>
+                <option value="R134a">R134a</option><option value="R407C">R407C</option>
+                <option value="R404A">R404A</option><option value="R448A">R448A</option>
+                <option value="R452A">R452A</option>
+            </optgroup>
+            <optgroup label="Naturels">
+                <option value="R290">R290 (Propane)</option><option value="R600a">R600a</option>
+                <option value="R744">R744 (CO2)</option>
+            </optgroup>
         </select>
         <div class="grid">
-            <input type="number" id="pBP" placeholder="P. BP (Bar)">
+            <input type="number" id="pBP" placeholder="BP (Bar rel)">
             <input type="number" id="tAspi" placeholder="T° Aspi (°C)">
+            <input type="number" id="pHP" placeholder="HP (Bar rel)">
+            <input type="number" id="tLiq" placeholder="T° Liq (°C)">
         </div>
-        <div class="grid">
-            <input type="number" id="long" placeholder="Liaison (m)">
-            <input type="number" id="pre" placeholder="Précharge (m)">
-        </div>
-        <button onclick="calcFrigo()">ANALYSE CIRCUIT & APPOINT</button>
-        <div class="res-box" id="resFrigo">SK: -- | Appoint: -- | tCO2e: --</div>
+        <button onclick="calcFrigo()">Diagnostic Expert</button>
+        <div class="res-box" id="resFrigo">SK: -- | SR: -- | tCO2e: --</div>
     </div>
 
-    <!-- MODULE 2 : CHAUFFAGE & GICLEURS -->
+    <!-- MODULE 2 : CHAUFFAGE & COMBUSTION -->
     <div class="card">
         <h2>🔥 CHAUFFAGE & COMBUSTION</h2>
         <div class="grid">
-            <input type="number" id="p_fioul" placeholder="Pression Pompe (Bar)">
-            <select id="gicleur">
-                <option value="0.40">0.40 USgal/h</option>
-                <option value="0.50">0.50 USgal/h</option>
-                <option value="0.60">0.60 USgal/h</option>
+            <select id="combustible">
+                <option value="fioul">Fioul Domestique</option>
+                <option value="gaz">Gaz Naturel</option>
+                <option value="propane">Propane</option>
             </select>
+            <input type="number" id="p_pompe" placeholder="P. Pompe (Bar)">
         </div>
         <div class="grid">
             <input type="number" id="co2" placeholder="CO2 (%)">
             <input type="number" id="t_fum" placeholder="T° Fumées (°C)">
         </div>
-        <button onclick="calcChauffage()">RENDEMENT & DÉBIT FIOUL</button>
-        <div class="res-box" id="resChauff">Débit: -- | Rendement: --</div>
+        <button onclick="calcCombustion()">Rendement & Combustion</button>
+        <div class="res-box" id="resComb">Rendement: -- | Excès Air: --</div>
     </div>
 
-    <!-- MODULE 3 : HYDRAULIQUE & RÉGULATION -->
+    <!-- MODULE 3 : HYDRAULIQUE & VASE -->
     <div class="card">
-        <h2>💧 HYDRAULIQUE & PID</h2>
+        <h2>💧 HYDRAULIQUE & VASE</h2>
         <div class="grid">
-            <input type="number" id="pui" placeholder="Puis. (kW)">
-            <input type="number" id="dt" placeholder="Delta T (K)">
+            <input type="number" id="pui_h" placeholder="Puis. Installation (kW)">
+            <input type="number" id="h_stat" placeholder="H. Statique (m)">
         </div>
-        <div class="grid">
-            <input type="number" id="t_ext" placeholder="T° Ext (°C)">
-            <input type="number" id="pente" placeholder="Pente (ex: 1.5)">
-        </div>
-        <button onclick="calcHydrau()">DÉBIT / HMT / LOI D'EAU</button>
-        <div class="res-box" id="resHydrau">Q: -- | HMT: -- | Consigne: --</div>
+        <button onclick="calcVase()">Dimensionner Vase & Débit</button>
+        <div class="res-box" id="resVase">Vase Min: -- | Débit (ΔT 5): --</div>
     </div>
 
-    <!-- MODULE 4 : ÉLECTRICITÉ INDUSTRIELLE -->
+    <!-- MODULE 4 : ÉLEC INDUSTRIELLE -->
     <div class="card">
-        <h2>⚡ MASTERELEC TRI</h2>
+        <h2>⚡ ÉLEC & CÂBLAGE</h2>
         <div class="grid">
-            <input type="number" id="pw" placeholder="Watts">
-            <select id="ph">
-                <option value="1">230V Monophasé</option>
-                <option value="3">400V Triphasé</option>
+            <input type="number" id="p_abs" placeholder="P. Absorbée (W)">
+            <select id="u_v">
+                <option value="230">Mono 230V</option>
+                <option value="400">Tri 400V</option>
             </select>
         </div>
-        <button onclick="calcElec()">INTENSITÉ & SECTION CÂBLE</button>
-        <div class="res-box" id="resElec">I: -- | Sec: --</div>
+        <input type="number" id="long_cable" placeholder="Longueur câble (m)">
+        <button onclick="calcElec()">Intensité & Section Cu</button>
+        <div class="res-box" id="resElec">I: -- | Section: -- | ΔU: --</div>
     </div>
 
-    <!-- MODULE 5 : RAPPORT SOUVERAIN -->
+    <!-- MODULE 5 : OMNISCAN CODES ERREURS (DYNAMIQUE) -->
     <div class="card">
-        <h2>📋 RAPPORT SOUVERAIN PAC̈ OO</h2>
-        <input type="text" id="cl" placeholder="Client / Site">
-        <textarea id="obs" placeholder="Actions correctives, mesures, pièces..."></textarea>
-        <canvas id="sig"></canvas>
-        <button onclick="savePDF()" style="background: #27ae60; margin-top: 10px;">EXPORTER RAPPORT PDF</button>
+        <h2>🔍 OMNISCAN CODES</h2>
+        <select id="marque">
+            <option value="daikin">Daikin</option><option value="mitsubishi">Mitsubishi</option>
+            <option value="atlantic">Atlantic</option><option value="panasonic">Panasonic</option>
+            <option value="hitachi">Hitachi</option><option value="viessmann">Viessmann</option>
+            <option value="dedietrich">De Dietrich</option><option value="saunier">Saunier Duval</option>
+        </select>
+        <input type="text" id="codeErr" placeholder="Saisir Code (ex: U4, E7, F1...)" onkeyup="lookUpCode()">
+        <div class="res-box" id="resCode" style="color: #ffaa00;">Solution stratégique...</div>
     </div>
 
-    <div class="footer">© 2025 PAC̈ OO HOLDING - PROPRIÉTÉ DE MAURICE</div>
+    <!-- MODULE 6 : RAPPORT SOUVERAIN -->
+    <div class="card">
+        <h2>📋 RAPPORT PAC̈ OO</h2>
+        <input type="text" id="cl_site" placeholder="Client / Site / N° Série">
+        <textarea id="cl_obs" placeholder="Mesures, fluides, travaux..."></textarea>
+        <canvas id="sig-pad"></canvas>
+        <button onclick="savePDF()" style="background: #27ae60; margin-top: 10px;">Générer Rapport Expert</button>
+    </div>
 
     <script>
+        const database = {
+            gwp: {"R32":675, "R410A":2088, "R134a":1430, "R407C":1774, "R404A":3922, "R448A":1387, "R452A":2140, "R290":3, "R600a":3, "R744":1},
+            pt: {"R32":[1.1, -43], "R410A":[1.05, -48], "R134a":[1.45, -28], "R407C":[1.12, -40]},
+            codes: {
+                "daikin": {"U4":"Com. Int/Ext", "L5":"Inverter DC", "E7":"Ventilateur Ext", "A6":"Moteur Vent. Int", "H9":"Sonde Ext"},
+                "mitsubishi": {"E6":"Transmission", "P8":"T° Échangeur", "U2":"Refoulement", "F5":"Sonde Gaz"},
+                "viessmann": {"F2":"Surchauffe STB", "F4":"Défaut Flamme", "EB":"Échangeur", "0D":"Débit eau"},
+                "saunier": {"F01":"Allumage", "F05":"Surchauffe", "F22":"Manque eau"}
+            }
+        };
+
         function calcFrigo() {
-            let p = parseFloat(document.getElementById('pBP').value) || 0;
-            let t = parseFloat(document.getElementById('tAspi').value) || 0;
             let g = document.getElementById('gaz').value;
-            let l = parseFloat(document.getElementById('long').value) || 0;
-            let pr = parseFloat(document.getElementById('pre').value) || 7;
-            let tsat = (g === "R32") ? (p*1.1-42) : (p*1.05-47);
-            let sk = t - tsat;
-            let app = (l > pr) ? (l - pr) * 20 : 0;
-            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span> | Appoint: <span class="val">${app}g</span>`;
+            let pB = parseFloat(document.getElementById('pBP').value) || 0;
+            let tA = parseFloat(document.getElementById('tAspi').value) || 0;
+            let pH = parseFloat(document.getElementById('pHP').value) || 0;
+            let tL = parseFloat(document.getElementById('tLiq').value) || 0;
+            let k = database.pt[g] || [1.1, -45];
+            let sk = tA - (pB * k[0] + k[1]);
+            let sr = (pH * k[0] + k[1]) - tL;
+            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span> | SR: <span class="val">${sr.toFixed(1)}K</span> | GWP: ${database.gwp[g]}`;
         }
 
-        function calcChauffage() {
-            let p = parseFloat(document.getElementById('p_fioul').value) || 0;
-            let g = parseFloat(document.getElementById('gicleur').value) || 0;
-            let debit = g * Math.sqrt(p / 7) * 3.12; 
-            let co2 = parseFloat(document.getElementById('co2').value) || 12;
-            let tf = parseFloat(document.getElementById('t_fum').value) || 150;
-            let r = 100 - (0.5 * (tf - 20) / co2);
-            document.getElementById('resChauff').innerHTML = `Débit: <span class="val">${debit.toFixed(2)} kg/h</span> | Rendement: <span class="val">${r.toFixed(1)}%</span>`;
-        }
-
-        function calcHydrau() {
-            let p = parseFloat(document.getElementById('pui').value) || 0;
-            let dt = parseFloat(document.getElementById('dt').value) || 5;
-            let te = parseFloat(document.getElementById('t_ext').value) || 0;
-            let pe = parseFloat(document.getElementById('pente').value) || 1.5;
-            let q = p / (1.163 * dt);
-            let c = 20 + pe * (20 - te);
-            document.getElementById('resHydrau').innerHTML = `Q: <span class="val">${q.toFixed(2)}m³/h</span> | Consigne: <span class="val">${c.toFixed(1)}°C</span>`;
+        function calcVase() {
+            let p = parseFloat(document.getElementById('pui_h').value) || 0;
+            let h = parseFloat(document.getElementById('h_stat').value) || 0;
+            let v_inst = p * 12; 
+            let v_min = v_inst * 0.06;
+            let p_gonf = (h / 10) + 0.3;
+            document.getElementById('resVase').innerHTML = `Vase: <span class="val">${Math.ceil(v_min)}L</span> | Gonflage: <span class="val">${p_gonf.toFixed(1)} Bar</span>`;
         }
 
         function calcElec() {
-            let pw = parseFloat(document.getElementById('pw').value) || 0;
-            let ph = document.getElementById('ph').value;
-            let i = (ph == "1") ? pw/230 : pw/(400*1.732*0.8);
-            let s = (i < 16) ? 1.5 : (i < 25) ? 2.5 : 6;
-            document.getElementById('resElec').innerHTML = `I: <span class="val">${i.toFixed(1)}A</span> | Sec: <span class="val">${s}mm²</span>`;
+            let w = parseFloat(document.getElementById('p_abs').value) || 0;
+            let u = document.getElementById('u_v').value;
+            let l = parseFloat(document.getElementById('long_cable').value) || 1;
+            let i = (u == "230") ? w/230 : w/(400*1.732*0.85);
+            let s = (0.017 * l * 2 * i) / (u * 0.03);
+            document.getElementById('resElec').innerHTML = `I: <span class="val">${i.toFixed(1)}A</span> | Section Min: <span class="val">${s.toFixed(2)}mm²</span>`;
         }
 
-        const pad = document.getElementById("sig"), ctx = pad.getContext("2d");
-        let act = false;
-        pad.addEventListener("touchstart", (e) => { act=true; ctx.beginPath(); e.preventDefault(); });
-        pad.addEventListener("touchmove", (e) => { if(act) { let r = pad.getBoundingClientRect(); ctx.lineTo(e.touches.clientX - r.left, e.touches.clientY - r.top); ctx.stroke(); } e.preventDefault(); });
-        pad.addEventListener("touchend", () => act=false);
+        function lookUpCode() {
+            let m = document.getElementById('marque').value;
+            let c = document.getElementById('codeErr').value.toUpperCase();
+            document.getElementById('resCode').innerText = (database.codes[m] && database.codes[m][c]) ? database.codes[m][c] : "Code non répertorié";
+        }
+
+        const pad = document.getElementById("sig-pad"), ctx = pad.getContext("2d");
+        let active = false;
+        pad.addEventListener("touchstart", (e) => { active=true; ctx.beginPath(); e.preventDefault(); });
+        pad.addEventListener("touchmove", (e) => { 
+            if(active) { 
+                let r = pad.getBoundingClientRect();
+                ctx.lineTo(e.touches.clientX - r.left, e.touches.clientY - r.top); ctx.stroke(); 
+            } e.preventDefault();
+        });
+        pad.addEventListener("touchend", () => active=false);
 
         function savePDF() {
             const { jsPDF } = window.jspdf; let doc = new jsPDF();
-            doc.text("PAC̈ OO SOLUTIONS - RAPPORT EXPERT", 20, 20);
-            doc.text("Client: " + document.getElementById('cl').value, 20, 40);
-            doc.addImage(pad.toDataURL(), 'PNG', 20, 100, 60, 30);
+            doc.setTextColor(0, 170, 255); doc.setFontSize(22); doc.text("PAC̈ OO SOLUTIONS", 20, 25);
+            doc.setFontSize(10); doc.setTextColor(100); doc.text("SOUVERAINETÉ TECHNIQUE - RAPPORT EXPERT", 20, 32);
+            doc.setTextColor(0); doc.text("Site : " + document.getElementById('cl_site').value, 20, 50);
+            doc.text("Observations : " + document.getElementById('cl_obs').value, 20, 60, {maxWidth: 160});
+            doc.addImage(pad.toDataURL(), 'PNG', 20, 120, 60, 30);
             doc.save("PAC_OO_Rapport.pdf");
         }
     </script>
