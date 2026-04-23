@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAC̈ OO - MASTERBOT</title>
+    <script src="https://cloudflare.com"></script>
+    <style>
+        :root { --accent: #00aaff; --bg: #050505; --card: #111; --text: #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; overflow-x: hidden; }
+        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .lock-logo { font-size: 40px; font-weight: bold; color: var(--accent); letter-spacing: 5px; margin-bottom: 20px; text-shadow: 0 0 15px var(--accent); }
+        .pin-input { background: #111; border: 1px solid var(--accent); color: white; padding: 15px; text-align: center; font-size: 24px; width: 150px; border-radius: 5px; letter-spacing: 10px; }
+        .header { text-align: center; padding: 20px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; }
+        .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 3px; color: var(--accent); }
+        .card { background: var(--card); border: 1px solid #222; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        h2 { font-size: 0.9em; color: var(--accent); text-transform: uppercase; margin: 0 0 15px 0; border-left: 3px solid var(--accent); padding-left: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        input, select, textarea { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 5px; margin-bottom: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; background: linear-gradient(135deg, #004488, #0074d9); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .res-box { background: #000; padding: 12px; border-radius: 5px; border: 1px solid #004488; margin-top: 5px; font-family: monospace; }
+        .val { color: #00ff88; font-weight: bold; }
+        canvas { background: white; width: 100%; height: 130px; border-radius: 5px; border: 1px solid var(--accent); }
+        .footer { text-align: center; font-size: 0.7em; color: #444; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="lock-screen">
+        <div class="lock-logo">PAC̈ OO</div>
+        <div style="color: #666; margin-bottom: 20px; font-size: 10px;">IDENTIFICATION REQUISE</div>
+        <input type="password" id="pin" class="pin-input" maxlength="4" placeholder="••••" onkeyup="checkPin()">
+    </div>
+    <div id="app-content" style="display:none;">
+        <div class="header">
+            <div class="logo-text">PAC̈ OO</div>
+            <div style="font-size: 10px; color: #666;">FRIGOSCANPRO AI - V1.0</div>
+        </div>
+        <div class="card">
+            <h2>❄️ FRIGOSCAN (Diagnostic)</h2>
+            <select id="gaz"><option value="R32">R32</option><option value="R410A">R410A</option><option value="R134a">R134a</option></select>
+            <div class="grid">
+                <input type="number" id="pBP" placeholder="P. BP (Bar)">
+                <input type="number" id="tAspi" placeholder="T° Aspi (°C)">
+            </div>
+            <button onclick="calcFrigo()">EXECUTER ANALYSE</button>
+            <div class="res-box" id="resFrigo">SK: -- | Appoint: --</div>
+        </div>
+        <div class="card">
+            <h2>💧 STRUCTURESCAN (Hydrau)</h2>
+            <div class="grid">
+                <input type="number" id="pui" placeholder="Puis. (kW)">
+                <input type="number" id="dt" placeholder="Delta T (K)">
+            </div>
+            <button onclick="calcHydrau()">CALCULER DÉBIT / HMT</button>
+            <div class="res-box" id="resHydrau">Q: -- | HMT: --</div>
+        </div>
+        <div class="card">
+            <h2>📋 RAPPORT SOUVERAIN</h2>
+            <input type="text" id="cl" placeholder="Client">
+            <textarea id="obs" placeholder="Actions réalisées..."></textarea>
+            <canvas id="sig"></canvas>
+            <button onclick="savePDF()" style="background: #27ae60; margin-top: 10px;">GÉNÉRER PDF</button>
+        </div>
+        <div class="footer">© 2025 PAC̈ OO HOLDING - STEALTH MODE</div>
+    </div>
+    <script>
+        function checkPin() {
+            if(document.getElementById('pin').value === '2025') {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+            }
+        }
+        function calcFrigo() {
+            let p = parseFloat(document.getElementById('pBP').value) || 0;
+            let t = parseFloat(document.getElementById('tAspi').value) || 0;
+            let tsat = (document.getElementById('gaz').value === "R32") ? (p*1.1-42) : (p*1.05-47);
+            let sk = t - tsat;
+            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span>`;
+        }
+        function calcHydrau() {
+            let p = parseFloat(document.getElementById('pui').value) || 0;
+            let dt = parseFloat(document.getElementById('dt').value) || 5;
+            let q = p / (1.163 * dt);
+            document.getElementById('resHydrau').innerHTML = `Q: <span class="val">${q.toFixed(2)}m³/h</span>`;
+        }
+        const pad = document.getElementById("sig"), ctx = pad.getContext("2d");
+        let act = false;
+        pad.addEventListener("touchstart", (e) => { act=true; ctx.beginPath(); e.preventDefault(); });
+        pad.addEventListener("touchmove", (e) => { if(act) { let r = pad.getBoundingClientRect(); ctx.lineTo(e.touches.clientX - r.left, e.touches.clientY - r.top); ctx.stroke(); } e.preventDefault(); });
+        pad.addEventListener("touchend", () => act=false);
+        function savePDF() {
+            const { jsPDF } = window.jspdf; let doc = new jsPDF();
+            doc.text("PAC̈ OO - RAPPORT", 20, 20);
+            doc.text("Client: " + document.getElementById('cl').value, 20, 40);
+            doc.addImage(pad.toDataURL(), 'PNG', 20, 100, 60, 30);
+            doc.save("PAC_OO_Report.pdf");
+        }
+    </script>
+</body>
+</html>
