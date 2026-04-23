@@ -3,97 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAC̈ OO - MASTERBOT</title>
+    <title>PAC̈ OO - MASTERBOT FINAL</title>
     <script src="https://cloudflare.com"></script>
     <style>
         :root { --accent: #00aaff; --bg: #050505; --card: #111; --text: #e0e0e0; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; overflow-x: hidden; }
-        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .lock-logo { font-size: 40px; font-weight: bold; color: var(--accent); letter-spacing: 5px; margin-bottom: 20px; text-shadow: 0 0 15px var(--accent); }
-        .pin-input { background: #111; border: 1px solid var(--accent); color: white; padding: 15px; text-align: center; font-size: 24px; width: 150px; border-radius: 5px; letter-spacing: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; }
         .header { text-align: center; padding: 20px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; }
-        .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 3px; color: var(--accent); }
-        .card { background: var(--card); border: 1px solid #222; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-        h2 { font-size: 0.9em; color: var(--accent); text-transform: uppercase; margin: 0 0 15px 0; border-left: 3px solid var(--accent); padding-left: 10px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, select, textarea { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 5px; margin-bottom: 10px; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; background: linear-gradient(135deg, #004488, #0074d9); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .res-box { background: #000; padding: 12px; border-radius: 5px; border: 1px solid #004488; margin-top: 5px; font-family: monospace; }
+        .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 5px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        .card { background: var(--card); border: 1px solid #222; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        h2 { font-size: 0.85em; color: var(--accent); text-transform: uppercase; margin: 0 0 12px 0; border-left: 3px solid var(--accent); padding-left: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        input, select, textarea { width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 4px; margin-bottom: 8px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: linear-gradient(135deg, #004488, #0074d9); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+        .res-box { background: #000; padding: 10px; border-radius: 4px; border: 1px solid #004488; margin-top: 5px; font-family: 'Courier New', monospace; font-size: 13px; }
         .val { color: #00ff88; font-weight: bold; }
-        canvas { background: white; width: 100%; height: 130px; border-radius: 5px; border: 1px solid var(--accent); }
-        .footer { text-align: center; font-size: 0.7em; color: #444; margin-top: 20px; }
+        canvas { background: white; width: 100%; height: 120px; border-radius: 4px; margin-top: 10px; }
+        .footer { text-align: center; font-size: 0.7em; color: #444; margin-top: 20px; padding-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div id="lock-screen">
-        <div class="lock-logo">PAC̈ OO</div>
-        <div style="color: #666; margin-bottom: 20px; font-size: 10px;">IDENTIFICATION REQUISE</div>
-        <input type="password" id="pin" class="pin-input" maxlength="4" placeholder="••••" onkeyup="checkPin()">
+
+    <div class="header">
+        <div class="logo-text">PAC̈ OO</div>
+        <div style="font-size: 9px; color: #666; letter-spacing: 2px;">OBJECTIF OMNISCIENCE - MASTERBOT V.FINAL</div>
     </div>
-    <div id="app-content" style="display:none;">
-        <div class="header">
-            <div class="logo-text">PAC̈ OO</div>
-            <div style="font-size: 10px; color: #666;">FRIGOSCANPRO AI - V1.0</div>
+
+    <!-- MODULE 1 : FROID & VIDE -->
+    <div class="card">
+        <h2>❄️ FRIGOSCAN PRO</h2>
+        <select id="gaz">
+            <option value="R32">R32</option>
+            <option value="R410A">R410A</option>
+            <option value="R134a">R134a</option>
+        </select>
+        <div class="grid">
+            <input type="number" id="pBP" placeholder="P. BP (Bar)">
+            <input type="number" id="tAspi" placeholder="T° Aspi (°C)">
         </div>
-        <div class="card">
-            <h2>❄️ FRIGOSCAN (Diagnostic)</h2>
-            <select id="gaz"><option value="R32">R32</option><option value="R410A">R410A</option><option value="R134a">R134a</option></select>
-            <div class="grid">
-                <input type="number" id="pBP" placeholder="P. BP (Bar)">
-                <input type="number" id="tAspi" placeholder="T° Aspi (°C)">
-            </div>
-            <button onclick="calcFrigo()">EXECUTER ANALYSE</button>
-            <div class="res-box" id="resFrigo">SK: -- | Appoint: --</div>
+        <div class="grid">
+            <input type="number" id="long" placeholder="Liaison (m)">
+            <input type="number" id="pre" placeholder="Précharge (m)">
         </div>
-        <div class="card">
-            <h2>💧 STRUCTURESCAN (Hydrau)</h2>
-            <div class="grid">
-                <input type="number" id="pui" placeholder="Puis. (kW)">
-                <input type="number" id="dt" placeholder="Delta T (K)">
-            </div>
-            <button onclick="calcHydrau()">CALCULER DÉBIT / HMT</button>
-            <div class="res-box" id="resHydrau">Q: -- | HMT: --</div>
-        </div>
-        <div class="card">
-            <h2>📋 RAPPORT SOUVERAIN</h2>
-            <input type="text" id="cl" placeholder="Client">
-            <textarea id="obs" placeholder="Actions réalisées..."></textarea>
-            <canvas id="sig"></canvas>
-            <button onclick="savePDF()" style="background: #27ae60; margin-top: 10px;">GÉNÉRER PDF</button>
-        </div>
-        <div class="footer">© 2025 PAC̈ OO HOLDING - STEALTH MODE</div>
+        <button onclick="calcFrigo()">ANALYSE CIRCUIT & APPOINT</button>
+        <div class="res-box" id="resFrigo">SK: -- | Appoint: -- | tCO2e: --</div>
     </div>
+
+    <!-- MODULE 2 : CHAUFFAGE & GICLEURS -->
+    <div class="card">
+        <h2>🔥 CHAUFFAGE & COMBUSTION</h2>
+        <div class="grid">
+            <input type="number" id="p_fioul" placeholder="Pression Pompe (Bar)">
+            <select id="gicleur">
+                <option value="0.40">0.40 USgal/h</option>
+                <option value="0.50">0.50 USgal/h</option>
+                <option value="0.60">0.60 USgal/h</option>
+            </select>
+        </div>
+        <div class="grid">
+            <input type="number" id="co2" placeholder="CO2 (%)">
+            <input type="number" id="t_fum" placeholder="T° Fumées (°C)">
+        </div>
+        <button onclick="calcChauffage()">RENDEMENT & DÉBIT FIOUL</button>
+        <div class="res-box" id="resChauff">Débit: -- | Rendement: --</div>
+    </div>
+
+    <!-- MODULE 3 : HYDRAULIQUE & RÉGULATION -->
+    <div class="card">
+        <h2>💧 HYDRAULIQUE & PID</h2>
+        <div class="grid">
+            <input type="number" id="pui" placeholder="Puis. (kW)">
+            <input type="number" id="dt" placeholder="Delta T (K)">
+        </div>
+        <div class="grid">
+            <input type="number" id="t_ext" placeholder="T° Ext (°C)">
+            <input type="number" id="pente" placeholder="Pente (ex: 1.5)">
+        </div>
+        <button onclick="calcHydrau()">DÉBIT / HMT / LOI D'EAU</button>
+        <div class="res-box" id="resHydrau">Q: -- | HMT: -- | Consigne: --</div>
+    </div>
+
+    <!-- MODULE 4 : ÉLECTRICITÉ INDUSTRIELLE -->
+    <div class="card">
+        <h2>⚡ MASTERELEC TRI</h2>
+        <div class="grid">
+            <input type="number" id="pw" placeholder="Watts">
+            <select id="ph">
+                <option value="1">230V Monophasé</option>
+                <option value="3">400V Triphasé</option>
+            </select>
+        </div>
+        <button onclick="calcElec()">INTENSITÉ & SECTION CÂBLE</button>
+        <div class="res-box" id="resElec">I: -- | Sec: --</div>
+    </div>
+
+    <!-- MODULE 5 : RAPPORT SOUVERAIN -->
+    <div class="card">
+        <h2>📋 RAPPORT SOUVERAIN PAC̈ OO</h2>
+        <input type="text" id="cl" placeholder="Client / Site">
+        <textarea id="obs" placeholder="Actions correctives, mesures, pièces..."></textarea>
+        <canvas id="sig"></canvas>
+        <button onclick="savePDF()" style="background: #27ae60; margin-top: 10px;">EXPORTER RAPPORT PDF</button>
+    </div>
+
+    <div class="footer">© 2025 PAC̈ OO HOLDING - PROPRIÉTÉ DE MAURICE</div>
+
     <script>
-        function checkPin() {
-            if(document.getElementById('pin').value === '2025') {
-                document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('app-content').style.display = 'block';
-            }
-        }
         function calcFrigo() {
             let p = parseFloat(document.getElementById('pBP').value) || 0;
             let t = parseFloat(document.getElementById('tAspi').value) || 0;
-            let tsat = (document.getElementById('gaz').value === "R32") ? (p*1.1-42) : (p*1.05-47);
+            let g = document.getElementById('gaz').value;
+            let l = parseFloat(document.getElementById('long').value) || 0;
+            let pr = parseFloat(document.getElementById('pre').value) || 7;
+            let tsat = (g === "R32") ? (p*1.1-42) : (p*1.05-47);
             let sk = t - tsat;
-            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span>`;
+            let app = (l > pr) ? (l - pr) * 20 : 0;
+            document.getElementById('resFrigo').innerHTML = `SK: <span class="val">${sk.toFixed(1)}K</span> | Appoint: <span class="val">${app}g</span>`;
         }
+
+        function calcChauffage() {
+            let p = parseFloat(document.getElementById('p_fioul').value) || 0;
+            let g = parseFloat(document.getElementById('gicleur').value) || 0;
+            let debit = g * Math.sqrt(p / 7) * 3.12; 
+            let co2 = parseFloat(document.getElementById('co2').value) || 12;
+            let tf = parseFloat(document.getElementById('t_fum').value) || 150;
+            let r = 100 - (0.5 * (tf - 20) / co2);
+            document.getElementById('resChauff').innerHTML = `Débit: <span class="val">${debit.toFixed(2)} kg/h</span> | Rendement: <span class="val">${r.toFixed(1)}%</span>`;
+        }
+
         function calcHydrau() {
             let p = parseFloat(document.getElementById('pui').value) || 0;
             let dt = parseFloat(document.getElementById('dt').value) || 5;
+            let te = parseFloat(document.getElementById('t_ext').value) || 0;
+            let pe = parseFloat(document.getElementById('pente').value) || 1.5;
             let q = p / (1.163 * dt);
-            document.getElementById('resHydrau').innerHTML = `Q: <span class="val">${q.toFixed(2)}m³/h</span>`;
+            let c = 20 + pe * (20 - te);
+            document.getElementById('resHydrau').innerHTML = `Q: <span class="val">${q.toFixed(2)}m³/h</span> | Consigne: <span class="val">${c.toFixed(1)}°C</span>`;
         }
+
+        function calcElec() {
+            let pw = parseFloat(document.getElementById('pw').value) || 0;
+            let ph = document.getElementById('ph').value;
+            let i = (ph == "1") ? pw/230 : pw/(400*1.732*0.8);
+            let s = (i < 16) ? 1.5 : (i < 25) ? 2.5 : 6;
+            document.getElementById('resElec').innerHTML = `I: <span class="val">${i.toFixed(1)}A</span> | Sec: <span class="val">${s}mm²</span>`;
+        }
+
         const pad = document.getElementById("sig"), ctx = pad.getContext("2d");
         let act = false;
         pad.addEventListener("touchstart", (e) => { act=true; ctx.beginPath(); e.preventDefault(); });
         pad.addEventListener("touchmove", (e) => { if(act) { let r = pad.getBoundingClientRect(); ctx.lineTo(e.touches.clientX - r.left, e.touches.clientY - r.top); ctx.stroke(); } e.preventDefault(); });
         pad.addEventListener("touchend", () => act=false);
+
         function savePDF() {
             const { jsPDF } = window.jspdf; let doc = new jsPDF();
-            doc.text("PAC̈ OO - RAPPORT", 20, 20);
+            doc.text("PAC̈ OO SOLUTIONS - RAPPORT EXPERT", 20, 20);
             doc.text("Client: " + document.getElementById('cl').value, 20, 40);
             doc.addImage(pad.toDataURL(), 'PNG', 20, 100, 60, 30);
-            doc.save("PAC_OO_Report.pdf");
+            doc.save("PAC_OO_Rapport.pdf");
         }
     </script>
 </body>
